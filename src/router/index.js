@@ -27,52 +27,53 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
   },
   {
-    path: '/search/',
+    path: '/search',
     name: 'search',
     component: Search
   },
+ 
   {
-    path: '/:category_slug/:product_slug/',
-    name: 'product',
-    component: Product
-  },
-  {
-    path: '/:category_slug/',
-    name: 'category',
-    component: Category
-  },
-  {
-    path: '/cart/',
+    path: '/cart',
     name: 'Cart',
     component: Cart
   },
   {
-    path: '/success/',
+    path: '/success',
     name: 'Success',
     component: Success
   },
   {
-    path: '/cart/checkout/',
+    path: '/cart/checkout',
     name: 'Checkout',
     component: Checkout,
     meta: { requireLogin: true }
   },
   {
-    path: '/sign-up/',
+    path: '/sign-up',
     name: 'SignUp',
     component: SignUp
   },
   {
-    path: '/log-in/',
+    path: '/log-in',
     name: 'LogIn',
     component: LogIn
   },
   {
-    path: '/my-account/',
+    path: '/my-account',
     name: 'MyAccount',
     component: MyAccount,
     meta: { requireLogin: true }
-  }
+  } ,
+  {
+    path: '/:category_slug/:product_slug',
+    name: 'product',
+    component: Product
+  },
+  {
+    path: '/:category_slug',
+    name: 'category',
+    component: Category
+  },
 ]
 
 const router = createRouter({
