@@ -1,5 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
+
+import store from '../store'
+
 import HomeView from '../views/HomeView.vue'
+
 import Product from '../views/Product.vue'
 import Category from '../views/Category.vue'
 import Search from '../views/Search.vue'
@@ -10,44 +14,13 @@ import MyAccount from '../views/MyAccount.vue'
 import Checkout from '../views/Checkout.vue'
 import Success from '../views/Success.vue'
 
-import store from '../store'
-
 const routes = [
   {
     path: '/',
-    name: 'home',
+    name: 'Home',
     component: HomeView
   },
-  {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  },
-  {
-    path: '/search',
-    name: 'search',
-    component: Search
-  },
  
-  {
-    path: '/cart',
-    name: 'Cart',
-    component: Cart
-  },
-  {
-    path: '/success',
-    name: 'Success',
-    component: Success
-  },
-  {
-    path: '/cart/checkout',
-    name: 'Checkout',
-    component: Checkout,
-    meta: { requireLogin: true }
-  },
   {
     path: '/sign-up',
     name: 'SignUp',
@@ -62,18 +35,43 @@ const routes = [
     path: '/my-account',
     name: 'MyAccount',
     component: MyAccount,
-    meta: { requireLogin: true }
-  } ,
+    meta: {
+        requireLogin: true
+    }
+  },
+  {
+    path: '/search',
+    name: 'Search',
+    component: Search
+  },
+  {
+    path: '/cart',
+    name: 'Cart',
+    component: Cart
+  },
+  {
+    path: '/cart/success',
+    name: 'Success',
+    component: Success
+  },
+  {
+    path: '/cart/checkout',
+    name: 'Checkout',
+    component: Checkout,
+    meta: {
+        requireLogin: true
+    }
+  },
   {
     path: '/:category_slug/:product_slug',
-    name: 'product',
+    name: 'Product',
     component: Product
   },
   {
     path: '/:category_slug',
-    name: 'category',
+    name: 'Category',
     component: Category
-  },
+  }
 ]
 
 const router = createRouter({
@@ -82,12 +80,11 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  console.log('before')
   if (to.matched.some(record => record.meta.requireLogin) && !store.state.isAuthenticated) {
-    console.log('after')
     next({ name: 'LogIn', query: { to: to.path } });
   } else {
     next()
   }
 })
+
 export default router
